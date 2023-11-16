@@ -1,21 +1,20 @@
 #include "main.h"
 
 /**
- * _printf - The function that prints output
- * @format: Character string
- * Return: Number of characters printed (excluding null byte)
+ * _printf - Print output according to a format.
+ * @format: Character string containing directives.
+ * Return: Number of characters printed (excluding null byte).
  */
 int _printf(const char *format, ...)
 {
 	if (format == NULL)
-		return (-1);
-
+		return -1;
 	va_list args;
 	int count = 0;
 
 	va_start(args, format);
 
-	int i;  // Declare 'i' at the beginning of the block
+	int i;
 
 	for (i = 0; format[i] != '\0'; i++)
 	{
@@ -23,22 +22,22 @@ int _printf(const char *format, ...)
 		{
 			i++;
 
-			while (formats[i].specifier != 0)
+			while (format[i].specifier != 0)
 			{
-				if (formats[i].specifier == format[i])
+				if (format[i].specifier == format[i])
 				{
-					count += formats[i].printer(args);
+					count += format[i].printer(args);
 					break;
 				}
 				i++;
 			}
 
-			if (formats[i].specifier == 0)
-				count += write(1, "%", 1) + write(1, &format[i], 1);
+			if (format[i].specifier == 0)
+				count += _putchar('%') + _putchar(format[i]);
 		}
 		else
 		{
-			count += write(1, &format[i], 1);
+			count += _putchar(format[i]);
 		}
 	}
 
