@@ -15,24 +15,17 @@ int _printf(const char *format, ...)
 
 	va_start(args, format);
 
-	int i = 0;
+	int i;  // Declare 'i' at the beginning of the block
 
-	print_format_t formats[] = {
-		{'c', print_char},
-		{'s', print_string},
-		{'%', print_percent},
-		{0, NULL}
-	};
-
-	while (*format != '\0')
+	for (i = 0; format[i] != '\0'; i++)
 	{
-		if (*format == '%' && format[1] != '\0')
+		if (format[i] == '%' && format[i + 1] != '\0')
 		{
-			format++;
+			i++;
 
 			while (formats[i].specifier != 0)
 			{
-				if (formats[i].specifier == *format)
+				if (formats[i].specifier == format[i])
 				{
 					count += formats[i].printer(args);
 					break;
@@ -40,15 +33,13 @@ int _printf(const char *format, ...)
 				i++;
 			}
 
-			if (formats[i].specifier == 0) /* Not found, print as is */
-				count += write(1, "%", 1) + write(1, format, 1);
+			if (formats[i].specifier == 0)
+				count += write(1, "%", 1) + write(1, &format[i], 1);
 		}
 		else
 		{
-			count += write(1, format, 1);
+			count += write(1, &format[i], 1);
 		}
-
-		format++;
 	}
 
 	va_end(args);
