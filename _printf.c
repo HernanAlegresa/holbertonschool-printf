@@ -20,6 +20,7 @@ int _printf(const char *format, ...)
 		if(*format == '%' && format[1] != '\0')
 		{
 			format++;
+
 			switch (*format)
 			{
 			case 'c':
