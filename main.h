@@ -8,6 +8,12 @@
 #include <stdio.h>
 #include <limits.h>
 
+typedef struct print_format
+{
+	char specifier;
+	int (*printer)(va_list args);
+} print_format_t;
+
 /* Function prototypes */
 int _printf(const char *format, ...);
 int print_char(va_list args);

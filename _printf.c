@@ -10,32 +10,37 @@ int _printf(const char *format, ...)
 	if (format == NULL)
 		return (-1);
 
+	int i = 0;
 	va_list args;
 	int count = 0;
 
 	va_start(args, format);
 
+	print_format_t formats[] = {
+		{'c', print_char},
+		{'s', print_string},
+		{'%', print_percent},
+		{0, NULL}
+	};
+
 	while (*format != '\0')
 	{
-		if(*format == '%' && format[1] != '\0')
+		if (*format == '%' && format[1] != '\0')
 		{
 			format++;
 
-			switch (*format)
+			while (formats[i].specifier != 0)
 			{
-			case 'c':
-				count += print_char(args);
-				break;
-			case 's':
-				count += print_string(args);
-				break;
-			case '%':
-				count += print_percent(args);
-				break;
-			default:
-				count += write(1, "%", 1);
-				count += write(1, format, 1);
+				if (formats[i].specifier == *format)
+				{
+					count += formats[i].printer(args);
+					break;
+				}
+				i++;
 			}
+
+			if (formats[i].specifier == 0) /* Not found, print as is */
+				count += write(1, "%", 1) + write(1, format, 1);
 		}
 		else
 		{
