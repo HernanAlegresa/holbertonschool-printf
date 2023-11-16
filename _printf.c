@@ -10,11 +10,12 @@ int _printf(const char *format, ...)
 	if (format == NULL)
 		return (-1);
 
-	int i = 0;
 	va_list args;
 	int count = 0;
 
 	va_start(args, format);
+
+	int i = 0;
 
 	print_format_t formats[] = {
 		{'c', print_char},
