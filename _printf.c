@@ -7,10 +7,16 @@ int _printf(const char *format, ...)
 
 	va_list args;
 	int count = 0;
+	int i;
 
 	va_start(args, format);
 
-	int i;
+	struct op
+	{
+		char specifier;
+		int (*printer)(va_list args);
+	};
+
 	op_t step[] = {
 		{'c', print_char},
 		{'s', print_string},
