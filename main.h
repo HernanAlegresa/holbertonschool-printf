@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <limits.h>
 
-typedef struct print_format
+typedef struct op
 {
 	char specifier;
 	int (*printer)(va_list args);
