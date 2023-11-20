@@ -2,70 +2,53 @@
 
 int _printf(const char *format, ...)
 {
-	if (format == NULL)
-		return (-1);
+    unsigned int i, str_count;
+    int count = 0;
+    va_list args;
 
-	va_list args;
-	int count = 0;
-	int i;
+    if (!format)
+        return (-1);
+    
+    va_start(args, format);
 
-	va_start(args, format);
+    for (i = 0; format[i] != '\0'; i++)
+    {
+        if (format[i] != '%')
+        {
+            _putchar(format[i]);
+            ++count;
+        }
+        else if (format[i + 1] == 'c')
+        {
+            _putchar(va_arg(args, int));
+            i++;
+            ++count;
+        }
+        else if (format[i + 1] == 's')
+        {
+            str_count = print_string(va_arg(args, char *));
+            i++;
+            count += str_count;
+        }
+        else if (format[i + 1] == 'd' || format[i + 1] == 'i')
+        {
+            int num = va_arg(args, int);
+            count += print_digit(num);
+            i++;
+        }
+        else if (format[i + 1] == '%')
+        {
+            _putchar('%');
+            ++count;
+            i++;
+        }
+        else
+        {
+            va_end(args);
+            return (-1);
+        }
+    }
 
-	struct op
-	{
-		char specifier;
-		int (*printer)(va_list args);
-	};
-
-	op_t step[] = {
-		{'c', print_char},
-		{'s', print_string},
-		{'%', print_percent},
-		{0, NULL}
-	};
-
-	for (i = 0; format[i] != '\0'; i++)
-	{
-		if (format[i] == '%' && format[i + 1] != '\0')
-		{
-			i++;
-			count += get_function(format[i], args);
-		}
-		else
-		{
-			count += write(1, &format[i], 1);
-		}
-	}
-
-	va_end(args);
-
-	return (count);
-}
-
-int get_function(char t_step, va_list args)
-{
-	int i = 0;
-	int count = 0;
-
-	op_t step[] = {
-	{'c', print_char},
-	{'s', print_string},
-	{'%', print_percent},
-	{0, NULL}
-	};
-
-	while (step[i].specifier != 0)
-	{
-		if (t_step == step[i].specifier)
-		{
-			count += step[i].printer(args);
-			break;
-		}
-		i++;
-	}
-
-	if (step[i].specifier == 0)
-		count += write(1, "%", 1) + write(1, &t_step, 1);
-
-	return count;
+    va_end(args);
+    return (count);
 }
