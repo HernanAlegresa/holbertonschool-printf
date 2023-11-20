@@ -1,5 +1,4 @@
 #include "main.h"
-#include "putchar.c"  /* Incluye otros archivos según sea necesario */
 
 /**
  * printdigit - Print integers.
