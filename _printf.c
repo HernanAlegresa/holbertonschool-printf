@@ -1,5 +1,10 @@
 #include "main.h"
 
+/**
+* _printf - create printf.
+*@format: Format.
+*Return: count chars.
+*/
 int _printf(const char *format, ...)
 {
     unsigned int i, str_count;
