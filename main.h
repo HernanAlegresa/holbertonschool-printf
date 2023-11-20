@@ -9,7 +9,7 @@
 #include <limits.h>
 
 /**
- * Struct to hold function pointers for each format specifier
+ * Struct to hold function pointers for each format specifier.
  */
 typedef struct print_format
 {
