@@ -1,6 +1,11 @@
 #include "main.h"
 #include "putchar.c"  /* Incluye otros archivos según sea necesario */
 
+/**
+ * printdigit - Print integers.
+ * @args: Argument list containing the integer to be printed.
+ * Return: Number of characters printed.
+ */
 int print_digit(int num)
 {
     int count = 0;
