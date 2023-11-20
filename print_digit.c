@@ -1,9 +1,9 @@
 #include "main.h"
 
 /**
- * printdigit - Print integers.
- * @args: Argument list containing the integer to be printed.
- * Return: Number of characters printed.
+ * printdigit - Print integers
+ * @args: Argument list containing the integer to be printed
+ * Return: Number of characters printed
  */
 int print_digit(int num)
 {
