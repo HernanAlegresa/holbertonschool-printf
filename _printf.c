@@ -1,9 +1,9 @@
 #include "main.h"
 
 /**
-* _printf - create printf.
-*@format: Format.
-*Return: count chars.
+* _printf - create printf
+*@format: Format
+*Return: count chars
 */
 int _printf(const char *format, ...)
 {
